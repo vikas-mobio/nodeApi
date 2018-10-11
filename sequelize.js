@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const UserModel = require('./models/usersModel');
-
+import bcrypt from "bcryptjs";
 const sequelize = new Sequelize('node', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
@@ -18,7 +18,6 @@ const sequelize = new Sequelize('node', 'root', '', {
   })
 
   const User = UserModel(sequelize, Sequelize);
-
   module.exports = {
     User
   }

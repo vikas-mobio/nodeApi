@@ -10,6 +10,7 @@
   "author": "vikas kushwaha",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-promise-router": "^3.0.3",
@@ -24,6 +25,7 @@
     "pg": "^7.5.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.39.0",
+    "sequelize-cli": "^4.1.1",
     "sqlite3": "^4.0.2",
     "tedious": "^2.6.4"
   },

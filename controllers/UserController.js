@@ -1,6 +1,13 @@
 import JWT from 'jsonwebtoken';
 import { User } from '../sequelize';
 import { JWT_SECRET } from '../configuration';
+import bcrypt from "bcryptjs";
+
+/**
+ * Signing token for jwt 
+ * @param {*} user 
+ * @return Sign jWT Token
+ */
 
 function signTOken(user) { 
     
@@ -13,16 +20,39 @@ function signTOken(user) {
 
 }
 
-module.exports = {
-    signUp: async (req, res, next) => {  
+/**
+ * Create Async function for Bcrypt password
+ * Its Taking 3-4 Secs to create
+ * So need to create in async
+ * @param {*} password 
+ */
 
-        User.create(req.body)
-            .then(user => res.status(200).json({ token: signTOken(user)}));
-           
-        /* */
-        //console.log(usersId);
-        //res.status(200).json({ token });
+async function passwordHash(password){
+    try{
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password,salt);
+        return hash;
+
+    }catch(error){
+      throw new Error(error);
+    }
+}
+
+module.exports = { 
+
+    signUp: async (req, res, next) => {   
+        
+        // Use Await for password Hash Because its return value after some time.
+//{name: req.body.name, email: req.body.email, password: await passwordHash(req.body.password)}
+        User.create(req.body).then(user => {
+                res.json({ token: signTOken(user)
+            })    
+      }).catch(error => {
+        next(error);
+     }) 
+      
     },
+
     getAllUser : async (req, res, next) => {
        // User.findAll().then(users => res.json(users))
         let query;
@@ -34,10 +64,13 @@ module.exports = {
         }
         return query.then(users => res.json(users))
     },
-    signIn: async (req, res , next) => {
-        console.log('sign in');
-    }
-    ,secret: async (req, res , next) => {
-        console.log('manage to get here');
+    
+    signIn: async (req, res , next) => { 
+        const token = signTOken(req.user);
+        res.status(200).json({token});
+    },
+    
+    secret: async (req, res , next) => { 
+        res.json({resource:'setes'});
     }
 }
