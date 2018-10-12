@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-
+import Blog from './blogs'
 module.exports = (sequelize, type) => { 
 
    
@@ -35,6 +35,15 @@ module.exports = (sequelize, type) => {
             }
         });
 
+     User.associate = function(models) { 
+            // associations can be defined here
+            //User.hasMany(models);
+            User.hasMany(models.Blog,{
+                foreignKey:'userId'
+            });
+            //User.hasMany(models.Task);
+     };
+    
     User.prototype.isValidPassword = async function (newPassword) {
         try { 
             

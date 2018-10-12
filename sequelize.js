@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
-const UserModel = require('./models/usersModel');
-import bcrypt from "bcryptjs";
+const UserModel = require('./app/models/usersModel');
+const BlogModel = require('./app/models/blogs');
+const TaskModel = require('./app/models/task');
+
 const sequelize = new Sequelize('node', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
@@ -15,9 +17,14 @@ const sequelize = new Sequelize('node', 'root', '', {
   sequelize.sync({ force: false })
   .then(() => {
     console.log(`Database & tables created!`)
-  })
+  });
 
   const User = UserModel(sequelize, Sequelize);
+  const Blog = BlogModel(sequelize, Sequelize);
+  const Task = TaskModel(sequelize, Sequelize);
+
   module.exports = {
-    User
+    User,
+    Blog,
+    Task
   }

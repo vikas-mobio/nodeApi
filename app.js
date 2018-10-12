@@ -9,7 +9,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 //Routers
-app.use('/users', require('./routes/UserRoute'));
+app.use('/users', require('./app/routes/apiRoute'));
 
 const port = process.env.PORT || 3000;
 

@@ -2,7 +2,7 @@ import passport from 'passport';
 const JwtStrategy  = require('passport-jwt').Strategy;
 import { ExtractJwt } from 'passport-jwt';
 const  LocalStrategy = require('passport-local').Strategy; 
-import { JWT_SECRET } from './configuration';
+import { JWT_SECRET } from './config';
 import { User } from './sequelize';
 
 //Json web token strategy
